@@ -35,9 +35,7 @@ class _LoginViewState extends State<LoginView> {
   }
 
   void onValidateEmail(String email) {
-    RegExp regex = RegExp(
-        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    bool isValid = regex.hasMatch(email.trim());
+    bool isValid = validateEmail(email);
     setState(() {
       isValid ? emailError = null : emailError = 'invalid email';
     });
@@ -45,6 +43,11 @@ class _LoginViewState extends State<LoginView> {
 
   void navigateToSignUp() {
     navigator.push(route: SignUpView.route, key: navigator.authNavigatorKey);
+  }
+
+  void navigateToForgotPassWordView() {
+    navigator.push(
+        route: ForgotPasswordView.route, key: navigator.authNavigatorKey);
   }
 
   @override
@@ -123,7 +126,7 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   InkWell(
                     onTap: () {
-                      print('tap on link');
+                      navigateToForgotPassWordView();
                     },
                     child: Text(
                       'Forgot Password',
@@ -138,7 +141,7 @@ class _LoginViewState extends State<LoginView> {
                 height: getProportionsScreenHeigth(24),
               ),
               Button(
-                label: 'Sing In',
+                label: 'Sign In',
                 onPress: login,
                 disable: disableButton,
               ),
